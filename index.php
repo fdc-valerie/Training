@@ -42,9 +42,7 @@ checkArray($array1,$array2);
 
 
 
-
-
-$data = array(100,'Hello World',0/0,array('delta'));
+$data = array(100,"Hello World",0==0,array("delta"));
 foreach ($data as $value) {
 	echo ' <br/>';
     echo gettype($value), "\n";
