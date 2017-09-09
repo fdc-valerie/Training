@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,44 +63,56 @@
     <div class="form-area">  
         <form method="post" action="functions.php" name ="add">
         <br style="clear:both">
-                    <h3 style="margin-bottom: 25px; text-align: center;">Teacher Information</h3>
+                    <h3 style="margin-bottom: 25px; text-align: center;">Update Teacher Information</h3>
+    				
+                   	<?php 
+					include('phpact.php');
+					$id= $_GET['id'];
+					$pdo = new PracticeOOP();
+
+					if($pdo){
+						$result = $pdo->viewOneData($id);
+						// $result=$pdo->updateData();
+					}else{
+						echo 'Error';
+					}
+					?>
+
+					
     				<div class="form-group">
-						<input type="text" class="form-control"  name="first_name" placeholder="First Name" >
+						<input type="text" class="form-control"  name="first_name" placeholder="First Name" value="<?php echo $result['first_name']; ?>">
            
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="last_name" placeholder="Last Name" >
+						<input type="text" class="form-control" name="last_name" placeholder="Last Name" value="<?php echo $result['last_name']; ?>" >
             
 					</div>
 
 
 					<fieldset class="form-group">
 						 <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="type" value="Full-Time">  Full-Time
-                </label>
+                	<label class="form-check-label">
+                    	<input type="radio" class="form-check-input" name="type" value="Full-Time" >  Full-Time
+                	</label>
              
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="type" value="Full-Time">  Part-Time
-                    
-                </label>
+                	<label class="form-check-label">
+                    	<input type="radio" class="form-check-input" name="type" value="Full-Time">  Part-Time
+                	</label>
              </div>
 					</fieldset>
 
 					<div class="form-group">
-						  <input type="text" class="form-control"  name="subject" placeholder="Subject" >
+						  <input type="text" class="form-control"  name="subject" placeholder="Subject" value="<?php echo $result['subject']; ?>" >
 					</div>  
-          <input class="btn btn-primary pull-right" name="submit" type="submit" value="Submit">  
+          <input class="btn btn-primary pull-right" name="submit" type="submit" value="Submit"> 
+          
            </form>
     </div>
 </div>
 </div>
-  
+   
 </div>
               
 </body>
 </html>
-
-
-
-
+  
