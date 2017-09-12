@@ -21,7 +21,6 @@ class PracticeOOP{
 		    }	
 		}
 		return $x;
-		
 	}
 
 	public function createDB(){
@@ -48,8 +47,8 @@ class PracticeOOP{
 	public function insertRow(){
 		$sql = "SELECT * from TEACHER   ";
 		$stmt = $this->pdo->prepare($sql);
-		$sql= "INSERT INTO TEACHER (ID, first_name, last_name, type, subject)
-		VALUES  (null,'".$_POST["first_name"]."','".$_POST["last_name"]."','".$_POST["type"]."','".$_POST["subject"]."')";
+		$sql= "INSERT INTO TEACHER (ID, first_name, last_name, subject, type)
+		VALUES  (null,'".$_POST["first_name"]."','".$_POST["last_name"]."','".$_POST["subject"]."','".$_POST["type"]."')";
 
 		$this->pdo->exec($sql);
 		echo "New data added succesfully";
@@ -57,10 +56,10 @@ class PracticeOOP{
 }
 
 	public function viewRow(){
-	$sql = "SELECT * from TEACHER  where flag=1 ";
-	$stmt = $this->pdo->prepare($sql);
-	$stmt->execute(array());
-	return $stmt -> fetchAll();
+		$sql = "SELECT * from TEACHER  where flag=1 ";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute(array());
+		return $stmt -> fetchAll();
 
 	// 	echo'<h3> LIST ALL THE ROWS OF A TABLE
 	//  </h3>';
@@ -99,28 +98,37 @@ class PracticeOOP{
 		// echo '<br/>';
 
 }
-	public function updateData(){
+	public function updateData($id, $data){
 		// echo '<h3> Update ID #3 Information to Valerie Lomocso </h3>';
-		$sql ="UPDATE TEACHER SET first_name ='".$_POST["first_name"]."', last_name = '".$_POST["last_name"]."', '".$_POST["type"]."', '".$_POST["subject"]."'";
+		$sql ="UPDATE TEACHER SET first_name ='".$data['first_name']."', last_name = '".$data['last_name']."',type = '".$data['type']."',subject = '".$data['subject']."' where ID=$id";
 		$this->pdo->exec($sql);
+		header("refresh:1;url=data.php");
 }
 
-	public function deleteData($id)
-{
+	public function deleteData($id){
 	// echo'Delete ID #10';
 	// $sql ="DELETE FROM TEACHER WHERE ID=?";
 	$sql ="UPDATE TEACHER SET flag =0 where ID=$id";
 	$this->pdo->exec($sql);
 	echo "  Data has been deleted";
-	echo '<br';
+	header("refresh:1;url=data.php");
 }
 	// private function closeConnection() {
 	// 	$this->pdo = null;
 	// }
 
+
+	public function searchData($keywords){
+		$sql= "SELECT * FROM TEACHER WHERE first_name like '.$keywords'.";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute(array());
+		return $stmt->fetchAll();
+
+	}
+
 }
 
-/**
+/**G
 * 
 */
 

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +34,7 @@
                  });
 });
               </script>
-
-    <style>
-     .error {
-        border: .15px solid #f00;
-    </style>
-</head>
+  </head>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" >
@@ -58,8 +52,8 @@
         <a class="nav-link" href="data.php">View All Data</a>
       </li>
         </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" name="search" action="search.php" method="get">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="keywords">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
@@ -67,46 +61,53 @@
 <div class="container">
 <div class="col-md-5">
     <div class="form-area">  
-        <form method="post" action="functions.php" name ="add">
+        <form method="post" action="update.php" name ="add">
         <br style="clear:both">
-                    <h3 style="margin-bottom: 25px; text-align: center;">Teacher Information</h3>
-    				<div class="form-group">
-						<input type="text" class="form-control"  name="first_name" placeholder="First Name" >
-           
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" name="last_name" placeholder="Last Name" >
-            
-					</div>
+                    <h3 style="margin-bottom: 25px; text-align: center;">Update Teacher Information</h3>
+    		  <?php 
+					include('phpact.php');
+					$id= $_GET['id'];
+					$pdo = new PracticeOOP();
+					if($pdo){
+						$result = $pdo->viewOneData($id); 
+          }else{
+						echo 'Error';
+					}
+					?>
+    				<div class="form-group">    
+             <input type="hidden" name="ID" value="<?php echo $result['ID']; ?>" ><h4>ID: <?php echo $result['ID']; ?></h4><br>
 
+						<input type="text" class="form-control"  name="first_name" placeholder="First Name" value="<?php echo $result['first_name']; ?>">
+					</div>
+					
+          <div class="form-group">
+						<input type="text" class="form-control" name="last_name" placeholder="Last Name" value="<?php echo $result['last_name']; ?>" >
+          </div>
 
 					<fieldset class="form-group">
 						 <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="type" value="Full-Time">  Full-Time
-                </label>
+                	<label class="form-check-label">
+                    	<input type="radio" class="form-check-input" name="type" value="Full-Time" <?php if($result['type']=='Full-Time') echo 'checked' ?> >  Full-Time
+                	</label>
              
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="type" value="Part-Time">  Part-Time
-                    
-                </label>
+                	<label class="form-check-label">
+                    	<input type="radio" class="form-check-input" name="type" value="Part-Time" <?php if($result['type'] =='Part-Time') echo 'checked'?> >  Part-Time
+                	</label>
              </div>
 					</fieldset>
-
 					<div class="form-group">
-						  <input type="text" class="form-control"  name="subject" placeholder="Subject" >
+						  <input type="text" class="form-control"  name="subject" placeholder="Subject" value="<?php echo $result['subject']; ?>" >
 					</div>  
-          <input class="btn btn-primary pull-right" name="submit" type="submit" value="Submit">  
+          <input class="btn btn-success" name="submit" type="submit" value="update"> 
+          
            </form>
     </div>
 </div>
 </div>
-  
+   
+   
 </div>
               
 </body>
 </html>
-
-
-
-
+  

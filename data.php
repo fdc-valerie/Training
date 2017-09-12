@@ -60,7 +60,7 @@ include('phpact.php');
 	    echo "<td>" .$row['last_name']. "</td>" ;
 	    echo "<td>" .$row['type']. "</td>" ;
 		echo "<td>" .$row['subject']. "</td>" ;
-		echo "<td><a class='btn btn-info' href='update.php?id=".$row['ID']."'>"."Update"."";
+		echo "<td><a class='btn btn-info' href='updateView.php?id=".$row['ID']."'>"."Update"."";
 		echo "<a class='btn btn-danger' href='delete.php?id=".$row['ID']."'>"."Delete"."</td>";
 	} ?>
 	</tbody>
