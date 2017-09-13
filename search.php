@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Search</title>
-</head>
-<body>
-<div class="container">
-<div class="table table-responsive">
-<table class="table">
-  <thead>
+	<thead>
 		<tr>
 		<th>ID</th>
 		<th>First Name</th>
@@ -17,33 +8,21 @@
 		<th>Action </th>
 		</tr> 
 	</thead>
-	<tbody>
-		<?php 
+	<?php 
 		include('phpact.php');
-		
+		$search = isset($_POST['search']) ? '%'.$_POST['search'].'%' : '';
 		$pdo = new PracticeOOP();
-
-		$keywords=isset($_POST['keywords']) ? '%'.$_POST['keywords'].'%' : '';
-
 			if($pdo){
-				$result = $pdo->searchData($keywords);
-				// print_r($_GET);
-			}else{
-				echo 'Error';
-			}
-				// print_r($_POST);
-				foreach( $result as $row ){
+				 $result = $pdo->searchData($search);
+			}	
+			foreach( $result as $row ){
 				echo "<tr>";
 				echo "<td>" .$row['ID']. "</td>";
-			    echo "<td>" .$row['first_name']. "</td>";
-			    echo "<td>" .$row['last_name']. "</td>" ;
+			   	echo "<td>" .$row['first_name']. "</td>";
+			   	echo "<td>" .$row['last_name']. "</td>" ;
 			    echo "<td>" .$row['type']. "</td>" ;
 				echo "<td>" .$row['subject']. "</td>" ;
-}
-		?>
-	</tbody>
-	</table>
-	</div>
-	</div>
-</body>
-</html>
+				echo "<td><a class='btn btn-info' href='updateView.php?id=".$row['ID']."'>"."Update"."";
+				echo "<a class='btn btn-danger' href='delete.php?id=".$row['ID']."'>"."Delete"."</td>";
+				}			
+	?>

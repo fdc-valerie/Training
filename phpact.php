@@ -56,7 +56,7 @@ class PracticeOOP{
 }
 
 	public function viewRow(){
-		$sql = "SELECT * from TEACHER  where flag=1 ";
+		$sql = "SELECT * from TEACHER ";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute(array());
 		return $stmt -> fetchAll();
@@ -96,19 +96,20 @@ class PracticeOOP{
 		// echo'<h3> LIST 1 Row of table </h3>';
 		// echo '<p>' . $result["ID"] . ' ' . $result["first_name"]  . '   ' . $result["last_name"]  .  '    ' . $result["time_in"]  .  '    ' .  $result["type"] .  '</p>';   
 		// echo '<br/>';
-
 }
 	public function updateData($id, $data){
 		// echo '<h3> Update ID #3 Information to Valerie Lomocso </h3>';
 		$sql ="UPDATE TEACHER SET first_name ='".$data['first_name']."', last_name = '".$data['last_name']."',type = '".$data['type']."',subject = '".$data['subject']."' where ID=$id";
 		$this->pdo->exec($sql);
+		echo "Data has been updated";
 		header("refresh:1;url=data.php");
 }
 
 	public function deleteData($id){
 	// echo'Delete ID #10';
 	// $sql ="DELETE FROM TEACHER WHERE ID=?";
-	$sql ="UPDATE TEACHER SET flag =0 where ID=$id";
+	// $sql ="UPDATE TEACHER SET flag =0 where ID=$id";
+	$sql ="DELETE FROM TEACHER where ID=$id";
 	$this->pdo->exec($sql);
 	echo "  Data has been deleted";
 	header("refresh:1;url=data.php");
@@ -116,32 +117,21 @@ class PracticeOOP{
 	// private function closeConnection() {
 	// 	$this->pdo = null;
 	// }
+	public function searchData($search){
 
-
-	public function searchData($keywords){
-		$sql= "SELECT * FROM TEACHER WHERE first_name like '.$keywords'.";
+		// $search = isset($_POST['search']) ? '%'.$_POST['search'].'%' : '';
+		$sql= "SELECT * FROM TEACHER WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR 
+			type LIKE '%$search%' OR 
+			subject LIKE '%$search%'  LIMIT 10 ";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute(array());
 		return $stmt->fetchAll();
 
+
+
 	}
 
 }
-
-/**G
-* 
-*/
-
-
-
-
-	
-		
-
-
-
-
-
  ?>
 
  
