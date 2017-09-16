@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"  />
   <script src="jquery-3.2.1.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script >
                $(function() {
                    $("form[name='add']").validate({
@@ -34,6 +35,35 @@
                  });
 });
               </script>
+<script>
+    $(document).ready(function(){
+     load_data();
+     function load_data(query)
+     {
+      $.ajax({
+       url:"search.php",
+       method:"POST",
+       data:{query:query},
+       success:function(data)
+       {
+        $('#display').html(data);
+       }
+      });
+     }
+     $('#search').keyup(function(){
+      var search = $(this).val();
+      if(search != '')
+      {
+       load_data(search);
+      }
+      else
+      {
+       load_data();
+      }
+     });
+    });
+</script> 
+              
   </head>
 </head>
 <body>
@@ -52,9 +82,13 @@
         <a class="nav-link" href="data.php">View All Data</a>
       </li>
         </ul>
-    <form class="form-inline my-2 my-lg-0" name="search" action="search.php" method="get">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="keywords">
+    <form class="form-inline my-2 my-lg-0" name="search" action="search.php" method="post">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search Data Here" aria-label="Search" name="search" id="#search">
+
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+      <div id="display"></div>
+
     </form>
   </div>
 </nav>

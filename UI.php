@@ -40,6 +40,11 @@
      .error {
         border: .15px solid #f00;
     </style>
+
+
+
+    
+    
 </head>
 </head>
 <body>
@@ -58,9 +63,12 @@
         <a class="nav-link" href="data.php">View All Data</a>
       </li>
         </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" name="search" action="search.php" method="get">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search Data Here" aria-label="Search" name="search" id="#search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+      <div id="display"></div>
+
     </form>
   </div>
 </nav>
