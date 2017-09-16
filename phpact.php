@@ -45,7 +45,7 @@ class PracticeOOP{
   
 }
 	public function insertRow(){
-		$sql = "SELECT * from TEACHER   ";
+		$sql = "SELECT * from TEACHER ";
 		$stmt = $this->pdo->prepare($sql);
 		$sql= "INSERT INTO TEACHER (ID, first_name, last_name, subject, type)
 		VALUES  (null,'".$_POST["first_name"]."','".$_POST["last_name"]."','".$_POST["subject"]."','".$_POST["type"]."')";
@@ -53,10 +53,11 @@ class PracticeOOP{
 		$this->pdo->exec($sql);
 		echo "New data added succesfully";
 		echo "<br>";
+		// echo json_encode($datas->first_name);
 }
 
 	public function viewRow(){
-		$sql = "SELECT * from TEACHER ";
+		$sql = "SELECT * from TEACHER where flag=1";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute(array());
 		return $stmt -> fetchAll();
@@ -91,6 +92,7 @@ class PracticeOOP{
 	$stmt->execute();
 	return $stmt ->fetch(PDO::FETCH_ASSOC);
 
+
 		// $result = $stmt ->fetch(PDO::FETCH_ASSOC); //gamita ni if ari nimo show ang result
 		// echo'<br/>';
 		// echo'<h3> LIST 1 Row of table </h3>';
@@ -106,10 +108,8 @@ class PracticeOOP{
 }
 
 	public function deleteData($id){
-	// echo'Delete ID #10';
-	// $sql ="DELETE FROM TEACHER WHERE ID=?";
-	// $sql ="UPDATE TEACHER SET flag =0 where ID=$id";
-	$sql ="DELETE FROM TEACHER where ID=$id";
+	$sql ="UPDATE TEACHER SET flag =0 where ID=$id";
+	// $sql ="DELETE FROM TEACHER where ID=$id";
 	$this->pdo->exec($sql);
 	echo "  Data has been deleted";
 	header("refresh:1;url=data.php");
@@ -120,9 +120,10 @@ class PracticeOOP{
 	public function searchData($search){
 
 		// $search = isset($_POST['search']) ? '%'.$_POST['search'].'%' : '';
-		$sql= "SELECT * FROM TEACHER WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR 
-			type LIKE '%$search%' OR 
-			subject LIKE '%$search%'  LIMIT 10 ";
+		$sql= "SELECT * FROM TEACHER WHERE (first_name LIKE '%$search%' 
+		OR  last_name LIKE '%$search%' 
+		OR 	type LIKE '%$search%' 
+		OR 	subject LIKE '%$search%') AND flag =1   LIMIT 10 ";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute(array());
 		return $stmt->fetchAll();
